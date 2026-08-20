@@ -139,11 +139,11 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 ))}
                 <li className="flex items-center space-x-4">
                   <Link
-                    href="/fosshack"
+                    href="https://opnform.com/forms/foss-club-dtc-core-team-application-2026-gevoue"
                     target="_blank"
-                    className="px-4 py-2 bg-gradient-green text-white rounded-full text-sm font-medium hover:opacity-90 transition-opacity btn-glow"
+                    className="px-4 py-2 bg-gradient-green text-white rounded-full text-sm font-medium hover:opacity-90 transition-opacity btn-glow whitespace-nowrap"
                   >
-                    FOSSHack2026
+                    APPLY NOW
                   </Link>
                   {/* <Link
                     href="/login"
