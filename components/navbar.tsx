@@ -52,12 +52,12 @@ export default function Navbar({ activeSection }: NavbarProps) {
   // Get navbar background based on scroll and theme
   const getNavbarBg = () => {
     if (scrolled) {
-      return isDark 
-        ? "bg-black/90 border-white/15" 
+      return isDark
+        ? "bg-black/90 border-white/15"
         : "bg-white border-gray-200 shadow-md"
     }
-    return isDark 
-      ? "bg-gray-950/40" 
+    return isDark
+      ? "bg-gray-950/40"
       : "bg-white/80"
   }
 
@@ -80,7 +80,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5 }}
-          style={{ 
+          style={{
             willChange: 'transform',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden'
@@ -92,7 +92,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 ? `mx-4 px-4 py-2 rounded-full border ${getNavbarBg()}`
                 : `px-4 ${getNavbarBg()}`
             }`}
-            style={{ 
+            style={{
               willChange: 'transform, opacity',
               transform: 'translateZ(0)',
               backfaceVisibility: 'hidden'
@@ -102,7 +102,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
               {/* Logo and Title - left aligned */}
               <div className="flex items-center justify-start flex-1 min-w-0">
                 <div className="flex items-center space-x-3 min-w-0">
-                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center glow-effect-green flex-shrink-0">
+                  <div className="w-8 h-8 bg-white flex items-center justify-center glow-effect-green flex-shrink-0">
                     <img
                       src="/LogoFOSS.webp"
                       alt="FC"
@@ -160,8 +160,8 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 <button
                   onClick={toggleTheme}
                   className={`p-2 rounded-full transition-colors btn-glow ${
-                    isDark 
-                      ? "text-gray-300 hover:text-green-400 hover:bg-gray-800" 
+                    isDark
+                      ? "text-gray-300 hover:text-green-400 hover:bg-gray-800"
                       : "text-gray-700 hover:text-green-500 hover:bg-gray-100"
                   }`}
                   aria-label="Toggle theme"
@@ -180,8 +180,8 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 <button
                   onClick={toggleMenu}
                   className={`md:hidden p-2 rounded-full transition-colors ${
-                    isDark 
-                      ? "text-gray-300 hover:text-green-400 hover:bg-gray-800" 
+                    isDark
+                      ? "text-gray-300 hover:text-green-400 hover:bg-gray-800"
                       : "text-gray-700 hover:text-green-500 hover:bg-gray-100"
                   }`}
                   aria-label="Toggle menu"
@@ -218,8 +218,8 @@ export default function Navbar({ activeSection }: NavbarProps) {
             >
               <div
                 className={`relative rounded-2xl shadow-2xl px-6 py-8 w-full max-w-sm flex flex-col items-center border ${
-                  isDark 
-                    ? "bg-black border-white/10" 
+                  isDark
+                    ? "bg-black border-white/10"
                     : "bg-white border-gray-200"
                 }`}
               >
@@ -227,8 +227,8 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 <button
                   onClick={toggleMenu}
                   className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${
-                    isDark 
-                      ? "text-gray-400 hover:text-white hover:bg-white/10" 
+                    isDark
+                      ? "text-gray-400 hover:text-white hover:bg-white/10"
                       : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                   aria-label="Close menu"

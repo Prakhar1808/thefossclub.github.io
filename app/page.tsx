@@ -376,6 +376,7 @@ export default function Home() {
               <span className="font-semibold">Learn, build, and collaborate</span> with fellow open-source enthusiasts.
             </m.p>
             <m.div
+              className="inline-block"
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             >
