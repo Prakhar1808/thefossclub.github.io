@@ -13,7 +13,6 @@ import {
   MapPin,
   MessageCircle,
   Moon,
-  PhoneCall,
   Quote,
   Send,
   Sun,
@@ -91,10 +90,6 @@ const AnimatedTitle = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// ============================================================
-// PLACEHOLDER DATA — replace these values with real recap data.
-// ============================================================
-
 const stats = [
   { label: "Registrations", value: "2400+", icon: Users },
   { label: "Projects Submitted", value: "150+", icon: Trophy },
@@ -104,8 +99,6 @@ const stats = [
   { label: "Cities Represented", value: "20+", icon: MapPin },
 ];
 
-// Placeholder image for every sub-event — swap each `image` path
-// per event once real photos are available (add files under public/fosshack2026/).
 const eventPlaceholderImage = "/fosshack/FOSSHack2026.webp";
 
 interface SubEvent {
@@ -125,7 +118,6 @@ interface EventPhase {
   events: SubEvent[];
 }
 
-// The month-long FOSS Hack 2026 journey, phased by theme.
 const eventPhases: EventPhase[] = [
   {
     phase: "Orientation & Kickoff",
@@ -224,7 +216,6 @@ const eventPhases: EventPhase[] = [
   },
 ];
 
-// Real winners from the results thread.
 const winners = [
   {
     rank: "1st Place",
@@ -246,7 +237,6 @@ const winners = [
 
 const resultsThreadUrl = "https://forum.fossunited.org/t/foss-hack-2026-results/8094";
 
-// Replace with real quotes.
 const testimonials = [
   {
     quote: "Glad I got to organise a hackathon in my college life, always greateful to The FOSS Club and FOSS UNITED for this oppourtunity",
@@ -265,7 +255,6 @@ const testimonials = [
   },
 ];
 
-// Replace with real links and photo albums.
 const presenceLinks = [
   {
     title: "Instagram",
@@ -305,7 +294,6 @@ const presenceLinks = [
   },
 ];
 
-// Replace with real posts/images from your social channels.
 const socialPosts = [
   {
     image: "/fosshack2026/venue.webp",
@@ -358,9 +346,6 @@ const team = [
   { name: "Nitya Kapoor", title: "Graphics & Content Head" },
   { name: "Bhumi Aggarwal", title: "Logistics Head" },
 ];
-// ============================================================
-// END OF PLACEHOLDER DATA
-// ============================================================
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -459,7 +444,7 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
             >
-              FOSS Hack 2026
+              FOSSHack 2026
             </motion.h1>
             <motion.p
               className="text-3xl sm:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]"
@@ -570,7 +555,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 1 }}
           >
-            A month of building, learning, and mapping — broken down by theme.
+            A month of building, learning, and mapping
           </motion.p>
 
           <div className="space-y-16">
