@@ -331,9 +331,13 @@ const galleryImages = [
   { src: "/fosshack2026/lab3.webp", alt: "Event photograph" },
   { src: "/fosshack2026/lab4.webp", alt: "Event photograph" },
   { src: "/fosshack2026/scribble.webp", alt: "Event photograph" },
-  { src: "/fosshack2026/cake2.webp", alt: "Event photograph" },
-  { src: "/fosshack2026/jamming2.webp", alt: "Event photograph" },
-  { src: "/fosshack2026/jamming3.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/cake2.webp", alt: "Cake Cutting and Celebration" },
+  { src: "/fosshack2026/jamming2.webp", alt: "Jamming session" },
+  { src: "/fosshack2026/jamming3.webp", alt: "Jamming session" },
+  { src: "/fosshack2026/food.webp", alt: "Food & breaks" },
+  { src: "/fosshack2026/food2.webp", alt: "Food And Refreshments" },
+  { src: "/fosshack2026/icards.webp", alt: "I-Cards" },
+  { src: "/fosshack2026/jamming.webp", alt: "Amazing Jamming Session" },
 ];
 
 const sponsors = [
@@ -372,6 +376,7 @@ export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
+  const [showAllGallery, setShowAllGallery] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -670,33 +675,50 @@ export default function Home() {
             A collection of our favourite moments from FOSS Hack 2026.
           </motion.p>
           <motion.div
-            className="columns-2 md:columns-3 lg:columns-4 gap-4 [&>*]:mb-4"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
           >
-            {galleryImages.map((img, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.03 }}
-                transition={{ delay: 0.1 * (index % 8), duration: 0.8 }}
-                className="group relative overflow-hidden rounded-2xl border border-foreground/10 break-inside-avoid cursor-pointer"
-                onClick={() => setActiveImage(index)}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={400}
-                  height={300}
-                  className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
-                    index % 3 === 0 ? "aspect-[3/4]" : "aspect-square"
-                  }`}
-                />
-              </motion.div>
-            ))}
+            {galleryImages
+              .slice(0, showAllGallery ? galleryImages.length : 4)
+              .map((img, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ delay: 0.1 * (index % 8), duration: 0.8 }}
+                  className="group relative overflow-hidden rounded-2xl border border-foreground/10 aspect-square cursor-pointer"
+                  onClick={() => setActiveImage(index)}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </motion.div>
+              ))}
           </motion.div>
+
+          {galleryImages.length > 4 && (
+            <motion.button
+              onClick={() => setShowAllGallery((prev) => !prev)}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="mx-auto mt-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-foreground transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+            >
+              {showAllGallery ? "Show Less" : "Show More Photos"}
+              <ArrowRight
+                className={`h-4 w-4 transition-transform duration-300 ${
+                  showAllGallery ? "rotate-90" : ""
+                }`}
+              />
+            </motion.button>
+          )}
         </div>
 
         <Dialog
@@ -931,7 +953,7 @@ export default function Home() {
           <AnimatedTitle>Our Sponsors & Communities</AnimatedTitle>
 
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12"
+            className="flex flex-wrap justify-center gap-6 mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
@@ -943,7 +965,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit ${sponsor.name}`}
-                className="rounded-2xl border border-foreground/10 bg-white p-4 flex items-center justify-center min-h-[90px]"
+                className="rounded-2xl border border-foreground/10 bg-white p-4 flex items-center justify-center min-h-[90px] w-[calc(50%-12px)] md:w-[calc(25%-18px)]"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
