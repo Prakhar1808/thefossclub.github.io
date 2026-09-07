@@ -25,6 +25,11 @@ import { useLenis } from "lenis/react";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const DynamicGeometricShapes = dynamic(
   () =>
@@ -91,8 +96,8 @@ const AnimatedTitle = ({ children }: { children: React.ReactNode }) => {
 };
 
 const stats = [
-  { label: "Registrations", value: "2400+", icon: Users },
-  { label: "Projects Submitted", value: "150+", icon: Trophy },
+  { label: "Registrations", value: "5430", icon: Users },
+  { label: "Projects Submitted", value: "800", icon: Trophy },
   { label: "Prize Pool", value: "₹5,00,000", icon: Trophy },
   { label: "Community Partners", value: "10+", icon: Users },
   { label: "Sponsors", value: "5+", icon: Trophy },
@@ -315,6 +320,22 @@ const socialPosts = [
   },
 ];
 
+// Event photograph gallery — add as many photos as you like here.
+const galleryImages = [
+  { src: "/fosshack2026/register.webp", alt: "Registrations" },
+  { src: "/fosshack2026/register2.webp", alt: "Photo Booth" },
+  { src: "/fosshack2026/register3.webp", alt: "Photo Booth" },
+  { src: "/fosshack2026/register4.webp", alt: "Registrations" },
+  { src: "/fosshack2026/cake.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/lab2.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/lab3.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/lab4.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/scribble.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/cake2.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/jamming2.webp", alt: "Event photograph" },
+  { src: "/fosshack2026/jamming3.webp", alt: "Event photograph" },
+];
+
 const sponsors = [
   { name: "TomTom", logo: "/fosshack/TomTom.webp", url: "https://tomtom.com" },
   { name: "XYZ", logo: "/fosshack/XYZ.webp", url: "https://nic.xyz" },
@@ -350,6 +371,7 @@ const team = [
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [activeImage, setActiveImage] = useState<number | null>(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -634,6 +656,76 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </Section>
+
+      <Section id="gallery">
+        <div className="w-full max-w-6xl mx-auto relative z-10">
+          <AnimatedTitle>Photo Gallery</AnimatedTitle>
+          <motion.p
+            className="text-center text-xl text-foreground/70 max-w-3xl mx-auto -mt-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 1 }}
+          >
+            A collection of our favourite moments from FOSS Hack 2026.
+          </motion.p>
+          <motion.div
+            className="columns-2 md:columns-3 lg:columns-4 gap-4 [&>*]:mb-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1 }}
+          >
+            {galleryImages.map((img, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.03 }}
+                transition={{ delay: 0.1 * (index % 8), duration: 0.8 }}
+                className="group relative overflow-hidden rounded-2xl border border-foreground/10 break-inside-avoid cursor-pointer"
+                onClick={() => setActiveImage(index)}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  width={400}
+                  height={300}
+                  className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+                    index % 3 === 0 ? "aspect-[3/4]" : "aspect-square"
+                  }`}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        <Dialog
+          open={activeImage !== null}
+          onOpenChange={(open) => !open && setActiveImage(null)}
+        >
+          <DialogContent className="max-w-5xl border-foreground/10 bg-background/95 backdrop-blur-md p-0 overflow-hidden">
+            <DialogTitle className="sr-only">
+              {activeImage !== null
+                ? galleryImages[activeImage].alt
+                : "Event photograph"}
+            </DialogTitle>
+            {activeImage !== null && (
+              <div className="relative w-full">
+                <Image
+                  src={galleryImages[activeImage].src}
+                  alt={galleryImages[activeImage].alt}
+                  width={1200}
+                  height={800}
+                  priority
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+                <div className="pb-4 px-4 text-center text-sm text-foreground/60">
+                  {galleryImages[activeImage].alt}
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </Section>
 
       <Section id="winners">
