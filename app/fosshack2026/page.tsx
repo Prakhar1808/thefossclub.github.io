@@ -674,51 +674,66 @@ export default function Home() {
           >
             A collection of our favourite moments from FOSS Hack 2026.
           </motion.p>
-          <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1 }}
-          >
-            {galleryImages
-              .slice(0, showAllGallery ? galleryImages.length : 4)
-              .map((img, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ delay: 0.1 * (index % 8), duration: 0.8 }}
-                  className="group relative overflow-hidden rounded-2xl border border-foreground/10 aspect-square cursor-pointer"
-                  onClick={() => setActiveImage(index)}
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </motion.div>
-              ))}
-          </motion.div>
-
-          {galleryImages.length > 4 && (
-            <motion.button
-              onClick={() => setShowAllGallery((prev) => !prev)}
-              initial={{ opacity: 0, y: 20 }}
+          <div className="relative">
+            <motion.div
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="mx-auto mt-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-foreground transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+              transition={{ delay: 0.2, duration: 1 }}
             >
-              {showAllGallery ? "Show Less" : "Show More Photos"}
-              <ArrowRight
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  showAllGallery ? "rotate-90" : ""
-                }`}
-              />
-            </motion.button>
-          )}
+              {galleryImages
+                .slice(0, showAllGallery ? galleryImages.length : 8)
+                .map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ delay: 0.1 * (index % 8), duration: 0.8 }}
+                    className="group relative overflow-hidden rounded-2xl border border-foreground/10 aspect-square cursor-pointer"
+                    onClick={() => setActiveImage(index)}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </motion.div>
+                ))}
+            </motion.div>
+
+            {!showAllGallery && galleryImages.length > 8 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="pointer-events-none absolute inset-0 z-10 flex items-end justify-center bg-gradient-to-t from-black/95 via-black/45 to-transparent rounded-2xl"
+              >
+                <button
+                  onClick={() => setShowAllGallery(true)}
+                  className="pointer-events-auto mb-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-white bg-black/40 backdrop-blur transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+                >
+                  Show More Photos
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300" />
+                </button>
+              </motion.div>
+            )}
+
+            {showAllGallery && galleryImages.length > 8 && (
+              <motion.button
+                onClick={() => setShowAllGallery(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="mx-auto mt-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-foreground transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+              >
+                Show Less
+                <ArrowRight className="h-4 w-4 rotate-90 transition-transform duration-300" />
+              </motion.button>
+            )}
+          </div>
         </div>
 
         <Dialog
