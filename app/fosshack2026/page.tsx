@@ -593,22 +593,22 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * phaseIndex, duration: 1 }}
               >
-                <div className="mb-6 flex items-center gap-4">
+                <div className="mb-6 flex flex-col items-center gap-2 text-center">
                   <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]">
                     {phase.phase}
                   </h3>
-                  <div className="h-px flex-1 bg-gradient-to-r from-foreground/20 to-transparent" />
+                  <div className="h-px w-32 bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
                 </div>
-                <p className="mb-8 text-lg text-foreground/60">{phase.intro}</p>
+                <p className="mb-8 text-lg text-foreground/60 text-center">{phase.intro}</p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-wrap justify-center gap-8">
                   {phase.events.map((event, index) => (
                     <motion.div
                       key={event.title}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 * index, duration: 0.8 }}
-                      className="group rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden hover:border-foreground/30 transition-colors duration-300"
+                      className="group rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden hover:border-foreground/30 transition-colors duration-300 w-full md:w-[calc(50%-16px)]"
                     >
                       <div className="relative overflow-hidden aspect-video">
                         <Image
@@ -986,7 +986,7 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-16"
+            className="flex flex-wrap justify-center gap-6 mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -997,7 +997,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index, duration: 0.6 }}
-                className="rounded-xl bg-background/80 flex flex-col items-center justify-center border border-foreground/10 p-4"
+                className="rounded-xl bg-background/80 flex flex-col items-center justify-center border border-foreground/10 p-4 w-[calc(50%-12px)] sm:w-[calc(33.333%-16px)] md:w-[calc(25%-18px)]"
               >
                 <div className="w-full flex items-center justify-center h-20">
                   <Image
@@ -1008,7 +1008,7 @@ export default function Home() {
                     className="max-h-full w-auto object-contain"
                   />
                 </div>
-                <h3 className="mt-3 text-base font-semibold text-foreground">
+                <h3 className="mt-3 text-base font-semibold text-foreground text-center">
                   {community.name}
                 </h3>
               </motion.div>
