@@ -12,10 +12,8 @@ import {
   Link2,
   MapPin,
   MessageCircle,
-  Moon,
   Quote,
   Send,
-  Sun,
   Trophy,
   Users,
 } from "lucide-react";
@@ -30,6 +28,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import Fosshack2026Navbar from "./navbar";
 
 const DynamicGeometricShapes = dynamic(
   () =>
@@ -69,7 +68,7 @@ const Section = ({
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
-      className="min-h-screen flex items-center justify-center p-8 relative"
+      className="min-h-screen relative flex items-center justify-center scroll-mt-24 p-4 py-10 sm:p-8"
     >
       {children}
     </motion.section>
@@ -103,8 +102,6 @@ const stats = [
   { label: "Sponsors", value: "5+", icon: Trophy },
   { label: "Cities Represented", value: "20+", icon: MapPin },
 ];
-
-const eventPlaceholderImage = "/fosshack/FOSSHack2026.webp";
 
 interface SubEvent {
   title: string;
@@ -396,37 +393,7 @@ export default function Home() {
 
   return (
     <div className="bg-background text-foreground text-lg relative overflow-hidden">
-      <div className="fixed right-6 top-6 z-30">
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          className={`group inline-flex items-center rounded-full px-2 py-1 backdrop-blur-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)]/60 focus-visible:ring-offset-2 border border-[rgba(var(--accent-green),0.6)] ${
-            theme === "light"
-              ? "bg-white text-[#141414] shadow-md shadow-black/15 hover:shadow-black/25 focus-visible:ring-offset-white"
-              : "bg-white/18 text-white shadow-[0_0_12px_rgba(0,0,0,0.4)] hover:bg-white/24 focus-visible:ring-offset-black"
-          }`}
-        >
-          <span
-            className={`relative flex h-6 w-10 items-center rounded-full p-1 transition-all ${
-              theme === "light"
-                ? "bg-black/8 group-hover:bg-black/12"
-                : "bg-black/35 group-hover:bg-black/45"
-            }`}
-          >
-            <span
-              className={`flex h-4 w-4 items-center justify-center rounded-full shadow-sm transition-transform duration-300 ${
-                theme === "light" ? "bg-white" : "bg-black/70"
-              } ${theme === "light" ? "translate-x-4" : "translate-x-0"}`}
-            >
-              {theme === "light" ? (
-                <Sun className="h-3.5 w-3.5 text-[#141414]" />
-              ) : (
-                <Moon className="h-3.5 w-3.5 text-white" />
-              )}
-            </span>
-          </span>
-        </button>
-      </div>
+      <Fosshack2026Navbar theme={theme} onToggleTheme={toggleTheme} />
       <BlurElement
         className={`bg-[var(--accent-green)]/40 w-[800px] h-[800px] -top-[400px] -left-[300px] ${
           theme === "light" ? "opacity-[0.28]" : "opacity-[0.15]"
@@ -458,7 +425,7 @@ export default function Home() {
       )}
 
       <Section id="overview">
-        <div className="text-center max-w-5xl mx-auto relative z-10">
+        <div className="text-center max-w-5xl mx-auto relative z-10 pt-16 md:pt-20">
           <motion.div
             className="mb-16 space-y-8"
             initial={{ opacity: 0, y: 50 }}
@@ -466,7 +433,7 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.6, -0.05, 0.01, 0.99] }}
           >
             <motion.h1
-              className="text-6xl sm:text-8xl font-bold text-foreground"
+              className="text-5xl sm:text-8xl font-bold text-foreground"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
@@ -541,7 +508,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="overview">
+      <Section id="stats">
         <div className="w-full max-w-6xl mx-auto relative z-10">
           <AnimatedTitle>Event At a Glance</AnimatedTitle>
           <motion.div
@@ -556,7 +523,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 * index, duration: 0.8 }}
-                className="rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur p-10 text-center"
+                className="rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur p-6 sm:p-10 text-center"
               >
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/8">
                   <stat.icon className="h-8 w-8 text-[var(--accent-cyan)]" />
@@ -861,6 +828,56 @@ export default function Home() {
         </div>
       </Section>
 
+      <Section id="posts">
+        <div className="max-w-5xl mx-auto relative z-10">
+          <AnimatedTitle>Our Posts</AnimatedTitle>
+          <motion.p
+            className="text-center text-xl text-foreground/70 max-w-3xl mx-auto -mt-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 1 }}
+          >
+            A few moments we shared online.
+          </motion.p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {socialPosts.map((post, index) => (
+              <motion.a
+                key={index}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.8 }}
+                className="group rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden hover:border-foreground/30 transition-colors duration-300 flex flex-col"
+              >
+                <div className="overflow-hidden aspect-square">
+                  <Image
+                    src={post.image}
+                    alt={post.caption}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-[var(--accent-cyan)] mb-2">
+                    {post.platform}
+                  </div>
+                  <p className="text-base leading-relaxed text-foreground/70 flex-1">
+                    {post.caption}
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-foreground/60 group-hover:text-foreground transition-colors">
+                    View Post
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       <Section id="presence">
         <div className="max-w-5xl mx-auto relative z-10">
           <AnimatedTitle>Our Online Presence</AnimatedTitle>
@@ -910,56 +927,6 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-
-          <motion.div
-            className="mt-16"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-          >
-            <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)] text-center mb-2">
-              Recent Posts
-            </h3>
-            <p className="text-center text-lg text-foreground/60 mb-8">
-              A few moments we shared online.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {socialPosts.map((post, index) => (
-                <motion.a
-                  key={index}
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.8 }}
-                  className="group rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden hover:border-foreground/30 transition-colors duration-300 flex flex-col"
-                >
-                  <div className="overflow-hidden aspect-square">
-                    <Image
-                      src={post.image}
-                      alt={post.caption}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-[var(--accent-cyan)] mb-2">
-                      {post.platform}
-                    </div>
-                    <p className="text-base leading-relaxed text-foreground/70 flex-1">
-                      {post.caption}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-foreground/60 group-hover:text-foreground transition-colors">
-                      View Post
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </Section>
 
@@ -994,6 +961,7 @@ export default function Home() {
                     height={100}
                     alt={sponsor.name}
                     className="max-h-[70px] w-auto object-contain"
+                    style={{ width: "auto", height: "auto" }}
                   />
                 </motion.div>
               </Link>
@@ -1021,6 +989,7 @@ export default function Home() {
                     height={80}
                     alt={community.name}
                     className="max-h-full w-auto object-contain"
+                    style={{ width: "auto", height: "auto" }}
                   />
                 </div>
                 <h3 className="mt-3 text-base font-semibold text-foreground text-center">
