@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Calendar } from "lucide-react"
 
 interface EventCardProps {
@@ -8,10 +9,11 @@ interface EventCardProps {
   description: string
   image: string
   index: number
+  link?: string
 }
 
-export default function EventCard({ title, date, description, image }: EventCardProps) {
-  return (
+export default function EventCard({ title, date, description, image, link }: EventCardProps) {
+  const card = (
     <div
       className="rounded-3xl overflow-hidden border border-border bg-card group shadow-lg hover:shadow-xl transition-shadow duration-300"
     >
@@ -36,4 +38,17 @@ export default function EventCard({ title, date, description, image }: EventCard
       </div>
     </div>
   )
+
+  if (link) {
+    return (
+      <Link
+        href={link}
+        className="block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        {card}
+      </Link>
+    )
+  }
+
+  return card
 }

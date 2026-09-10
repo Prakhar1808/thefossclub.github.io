@@ -180,12 +180,13 @@ export default function Home() {
         "A hands-on session where you’ll install Linux, learn how it works, and understand why so many developers swear by it.",
       image: "/Unlocking-TUX-Linux-Installation-Party.webp?=300&width=400",
     },
-    {
+{
       title: "FOSS Hack 2026",
       date: "March 1-31, 2026",
       description:
-        "A month-long hackathon focused on innovation and open-source development in India’s biggest FOSS hackathon. Build a new project, contribute to existing work, learn from mentors, and connect with the community.",
+        "A month-long hackathon focused on innovation and open-source development in India's biggest FOSS hackathon. Build a new project, contribute to existing work, learn from mentors, and connect with the community.",
       image: "fosshack/FOSSHack2026.webp?height=300&width=400",
+      link: "/fosshack2026",
     },
   ]
 
@@ -627,6 +628,7 @@ export default function Home() {
                 description={event.description}
                 image={event.image}
                 index={index}
+                link={event.link}
               />
             ))}
           </div>
