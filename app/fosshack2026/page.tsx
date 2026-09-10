@@ -360,14 +360,36 @@ const communities = [
 
 const team = [
   { name: "Tanmay Maheshwari", title: "Lead Organizer" },
-  { name: "Sanjam Kaur", title: "Management" },
+  { name: "Sanjam Kaur", title: "Decoration" },
   { name: "Jayesh Bisht", title: "Management" },
-  { name: "Avneesh Kumar", title: "Community Partners" },
-  { name: "Manya Yadav", title: "PR & Outreach Head" },
-  { name: "Ishita Kaushik", title: "Social Media" },
+  { name: "Avneesh Kumar", title: "Lead Origanizer & Community Manager" },
+  { name: "Aditya Sachdeva", title: "Graphic Designer" },
   { name: "Nitya Kapoor", title: "Graphics & Content Head" },
+  { name: "Adarsh Sen", title: "Social Media Lead" },
+  { name: "Krish Gupta", title: "Event Manager" },
+  { name: "Manya Yadav", title: "PR & Outreach Head" },
   { name: "Bhumi Aggarwal", title: "Logistics Head" },
+  { name: "Aditya Singh", title: "Event Manager" },
+  { name: "Anmol", tittle: "Event Manager"},
+  { name: "Satyam Raj", title: "Photographer" },
+  { name: "Harshit"},
+  { name: "Ishita Kaushik", title: "Social Media" },
 ];
+
+const volunteers = [
+    { name: "Sejal Madan", title: "Photographer"},
+    { name: "Prakhar Sharma", title: "Graphic Designer, Management, Decoration, Photographer, OS Contributor"},
+    { name: "Tooshar Bhardwaj", title: "OS Contributor, Content Writer, Management"},
+    { name: "Shivani", title: "Anchor"},
+    { name: "Aanya"},
+    { name: "Tripta"},
+    { name: "Priyal"},
+    { name: "Krishna"},
+    { name: "Dishant"},
+    { name: "Sohendrajeet"},
+    { name: "Utkarsh Gupta", title: "Photographer"},
+    { name: "Vanshika", tittle: "Photographer"},
+]
 
 export default function Home() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
@@ -1020,6 +1042,48 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 1 }}
           >
             {team.map((member, i) => (
+              <motion.div
+                key={i}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * i, duration: 0.8 }}
+              >
+                <motion.div
+                  className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 rounded-full flex items-center justify-center bg-foreground/8"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-foreground" />
+                </motion.div>
+                <h3 className="text-lg sm:text-xl font-medium mb-1 text-foreground">
+                  {member.name}
+                </h3>
+                <p className="text-sm text-foreground/60">{member.title}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </Section>
+
+     <Section id="volunteers">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <AnimatedTitle>New Faces</AnimatedTitle>
+          <motion.p
+            className="text-center text-xl text-foreground/70 max-w-3xl mx-auto -mt-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 1 }}
+          >
+            Thank you for your Contribution!
+          </motion.p>
+          <motion.div
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1 }}
+          >
+            {volunteers.map((member, i) => (
               <motion.div
                 key={i}
                 className="text-center"
