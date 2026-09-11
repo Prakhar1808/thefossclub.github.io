@@ -21,6 +21,7 @@ export default function RootLayout({
       className="dark"
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
     >
       <head>
         <title>The FOSS Club</title>

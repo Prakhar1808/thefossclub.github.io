@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, type MotionProps } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import {
@@ -102,6 +102,85 @@ const stats = [
   { label: "Sponsors", value: "5+", icon: Trophy },
   { label: "Cities Represented", value: "20+", icon: MapPin },
 ];
+
+function TiltCard({
+  children,
+  className = "",
+  ...motionProps
+}: MotionProps & { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rotateX = useSpring(useMotionValue(0), { stiffness: 250, damping: 20 });
+  const rotateY = useSpring(useMotionValue(0), { stiffness: 250, damping: 20 });
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    rotateX.set(-py * 14);
+    rotateY.set(px * 14);
+  }
+
+  function handleMouseLeave() {
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{
+        y: -12,
+        scale: 1.05,
+        boxShadow:
+          "0 30px 80px -20px rgba(var(--accent-cyan), 0.5), 0 0 45px -10px rgba(var(--accent-cyan), 0.35)",
+        borderColor: "rgba(var(--accent-cyan), 0.55)",
+        transition: { type: "spring", stiffness: 260, damping: 18 },
+      }}
+      style={{
+        rotateX,
+        rotateY,
+        transformPerspective: 900,
+        boxShadow: "0 12px 40px -18px rgba(0, 0, 0, 0.6)",
+      }}
+      className={`group relative rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur will-change-transform ${className}`}
+      {...motionProps}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function GlanceStatCard({
+  stat,
+  index,
+}: {
+  stat: (typeof stats)[number];
+  index: number;
+}) {
+  return (
+    <TiltCard
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15 * index, duration: 0.8 }}
+      className="p-6 sm:p-10 text-center"
+    >
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_0%,rgba(var(--accent-cyan),0.14),transparent_65%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/8 transition-all duration-300 group-hover:scale-110 group-hover:bg-[rgba(var(--accent-cyan),0.12)] group-hover:shadow-[0_0_20px_rgba(var(--accent-cyan),0.4)]">
+        <stat.icon className="h-8 w-8 text-[var(--accent-cyan)]" />
+      </div>
+      <div className="relative text-4xl font-bold text-foreground">
+        {stat.value}
+      </div>
+      <div className="relative mt-2 text-lg text-foreground/60">
+        {stat.label}
+      </div>
+    </TiltCard>
+  );
+}
 
 interface SubEvent {
   title: string;
@@ -362,7 +441,7 @@ const team = [
   { name: "Tanmay Maheshwari", title: "Lead Organizer" },
   { name: "Sanjam Kaur", title: "Decoration" },
   { name: "Jayesh Bisht", title: "Management" },
-  { name: "Avneesh Kumar", title: "Lead Origanizer & Community Manager" },
+  { name: "Avneesh Kumar", title: "Lead Origanizer, Community Manager & Campus Ambassador" },
   { name: "Aditya Sachdeva", title: "Graphic Designer" },
   { name: "Nitya Kapoor", title: "Graphics & Content Head" },
   { name: "Adarsh Sen", title: "Social Media Lead" },
@@ -370,25 +449,26 @@ const team = [
   { name: "Manya Yadav", title: "PR & Outreach Head" },
   { name: "Bhumi Aggarwal", title: "Logistics Head" },
   { name: "Aditya Singh", title: "Event Manager" },
-  { name: "Anmol", tittle: "Event Manager"},
+  { name: "Anmol Upadhyay", title: "Video Editor"},
   { name: "Satyam Raj", title: "Photographer" },
-  { name: "Harshit"},
+  { name: "Harshit Vashisht", title: "Campus Ambassador"},
+  { name: "Kartik Gupta", title: "Community Manager"},
   { name: "Ishita Kaushik", title: "Social Media" },
 ];
 
 const volunteers = [
-    { name: "Sejal Madan", title: "Photographer"},
-    { name: "Prakhar Sharma", title: "Graphic Designer, Management, Decoration, Photographer, OS Contributor"},
+    { name: "Sejal Madaan", title: "Photographer"},
+    { name: "Prakhar Sharma", title: "Campus Ambassador, Graphic Designer, Management, Decoration, Photographer, OS Contributor"},
     { name: "Tooshar Bhardwaj", title: "OS Contributor, Content Writer, Management"},
-    { name: "Shivani", title: "Anchor"},
-    { name: "Aanya"},
-    { name: "Tripta"},
-    { name: "Priyal"},
-    { name: "Krishna"},
-    { name: "Dishant"},
-    { name: "Sohendrajeet"},
+    { name: "Shivani Kumari Mishra", title: "Anchor"},
+    { name: "Aanya", title: "Discipline"},
+    { name: "Tripta Taneja", title: "Discipline"},
+    { name: "Priyal", title: "Discipline"},
+    { name: "Krishna", title: "Discipline"},
+    { name: "Dishant", title: "Discipline"},
+    { name: "Sohendrajeet", title: "Discipline"},
     { name: "Utkarsh Gupta", title: "Photographer"},
-    { name: "Vanshika", tittle: "Photographer"},
+    { name: "Vanshika", title: "Photographer"},
 ]
 
 export default function Home() {
@@ -540,23 +620,7 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 1 }}
           >
             {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 * index, duration: 0.8 }}
-                className="rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur p-6 sm:p-10 text-center"
-              >
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/8">
-                  <stat.icon className="h-8 w-8 text-[var(--accent-cyan)]" />
-                </div>
-                <div className="text-4xl font-bold text-foreground">
-                  {stat.value}
-                </div>
-                <div className="mt-2 text-lg text-foreground/60">
-                  {stat.label}
-                </div>
-              </motion.div>
+              <GlanceStatCard key={stat.label} stat={stat} index={index} />
             ))}
           </motion.div>
         </div>
@@ -592,14 +656,14 @@ export default function Home() {
 
                 <div className="flex flex-wrap justify-center gap-8">
                   {phase.events.map((event, index) => (
-                    <motion.div
+                    <TiltCard
                       key={event.title}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 * index, duration: 0.8 }}
-                      className="group rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden hover:border-foreground/30 transition-colors duration-300 w-full md:w-[calc(50%-16px)]"
+                      className="w-full md:w-[calc(50%-16px)]"
                     >
-                      <div className="relative overflow-hidden aspect-video">
+                      <div className="relative overflow-hidden aspect-video rounded-t-2xl">
                         <Image
                           src={event.image}
                           alt={`${event.title} — photo coming soon`}
@@ -643,7 +707,7 @@ export default function Home() {
                           {event.desc}
                         </p>
                       </div>
-                    </motion.div>
+                    </TiltCard>
                   ))}
                 </div>
               </motion.div>
@@ -975,15 +1039,14 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index, duration: 0.6 }}
-                  className="flex items-center justify-center"
+                  className="relative h-[70px] w-full max-w-[200px]"
                 >
                   <Image
                     src={sponsor.logo}
-                    width={200}
-                    height={100}
+                    fill
+                    sizes="200px"
                     alt={sponsor.name}
-                    className="max-h-[70px] w-auto object-contain"
-                    style={{ width: "auto", height: "auto" }}
+                    className="object-contain"
                   />
                 </motion.div>
               </Link>
@@ -1004,14 +1067,13 @@ export default function Home() {
                 transition={{ delay: 0.1 * index, duration: 0.6 }}
                 className="rounded-xl bg-background/80 flex flex-col items-center justify-center border border-foreground/10 p-4 w-[calc(50%-12px)] sm:w-[calc(33.333%-16px)] md:w-[calc(25%-18px)]"
               >
-                <div className="w-full flex items-center justify-center h-20">
+                <div className="relative w-full h-20">
                   <Image
                     src={community.logo}
-                    width={160}
-                    height={80}
+                    fill
+                    sizes="160px"
                     alt={community.name}
-                    className="max-h-full w-auto object-contain"
-                    style={{ width: "auto", height: "auto" }}
+                    className="object-contain"
                   />
                 </div>
                 <h3 className="mt-3 text-base font-semibold text-foreground text-center">
