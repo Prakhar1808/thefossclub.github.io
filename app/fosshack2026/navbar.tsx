@@ -99,7 +99,7 @@ export default function Fosshack2026Navbar({
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)] px-4 py-3 text-center text-base font-semibold text-[#141414]"
+              className="mt-2 rounded-full bg-gradient-to-r from-accent-green to-accent-light-green px-4 py-3 text-center text-base font-semibold text-[#141414]"
             >
               Back to Home
             </Link>

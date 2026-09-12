@@ -47,15 +47,6 @@ const DynamicGeometricShapes = dynamic(
   },
 );
 
-const BlurElement = ({ className }: { className: string }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 2 }}
-    className={`absolute rounded-full mix-blend-multiply filter blur-3xl ${className}`}
-  />
-);
-
 const Section = ({
   children,
   id,
@@ -143,8 +134,8 @@ function TiltCard({
         y: -12,
         scale: 1.05,
         boxShadow:
-          "0 30px 80px -20px rgba(var(--accent-cyan), 0.5), 0 0 45px -10px rgba(var(--accent-cyan), 0.35)",
-        borderColor: "rgba(var(--accent-cyan), 0.55)",
+          "0 30px 80px -20px rgba(var(--accent-light-green), 0.5), 0 0 45px -10px rgba(var(--accent-light-green), 0.35)",
+        borderColor: "rgba(var(--accent-light-green), 0.55)",
         transition: { type: "spring", stiffness: 260, damping: 18 },
       }}
       style={{
@@ -175,9 +166,9 @@ function GlanceStatCard({
       transition={{ delay: 0.15 * index, duration: 0.8 }}
       className="p-6 sm:p-10 text-center"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_0%,rgba(var(--accent-cyan),0.14),transparent_65%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/8 transition-all duration-300 group-hover:scale-110 group-hover:bg-[rgba(var(--accent-cyan),0.12)] group-hover:shadow-[0_0_20px_rgba(var(--accent-cyan),0.4)]">
-        <stat.icon className="h-8 w-8 text-[var(--accent-cyan)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_30%_0%,rgba(var(--accent-light-green),0.14),transparent_65%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/8 transition-all duration-300 group-hover:scale-110 group-hover:bg-[rgba(var(--accent-light-green),0.12)] group-hover:shadow-[0_0_20px_rgba(var(--accent-light-green),0.4)]">
+        <stat.icon className="h-8 w-8 text-accent-light-green" />
       </div>
       <div className="relative text-4xl font-bold text-foreground">
         {stat.value}
@@ -324,18 +315,18 @@ const winners = [
   {
     rank: "Partner Contribution",
     prize: "₹25,000",
-    team: "Anshika Yadav",
+    team: "Team · Rule smith",
     project: "Improving UX & Contributor Workflow in FOSS United Platform",
     image: "/fosshack2026/rule_smith.webp",
-    desc: "Team · Rule smith",
+    desc: "Anshika Yadav",
   },
   {
     rank: "Partner Contribution",
     prize: "₹10,000",
-    team: "Mayank Choubey",
+    team: "Beluga",
     project: "OSM Data Contribution",
     image: "/fosshack2026/beluga.webp",
-    desc: "Team · Beluga · OpenStreetMap",
+    desc: "Mayank Choubey",
   },
 ];
 
@@ -442,12 +433,6 @@ const galleryImages = [
 const sponsors = [
   { name: "TomTom", logo: "/fosshack/TomTom.webp", url: "https://tomtom.com" },
   { name: "XYZ", logo: "/fosshack/XYZ.webp", url: "https://nic.xyz" },
-  {
-    name: "CodeCrafters",
-    logo: "/fosshack/CodeCrafters.webp",
-    url: "https://codecrafters.io",
-  },
-  { name: "Maxflex", logo: "/fosshack/Maxflex.webp", url: "" },
 ];
 
 const communities = [
@@ -534,21 +519,6 @@ export default function Home() {
   return (
     <div className="bg-background text-foreground text-lg relative overflow-hidden">
       <Fosshack2026Navbar theme={theme} onToggleTheme={toggleTheme} />
-      <BlurElement
-        className={`bg-[var(--accent-green)]/40 w-[800px] h-[800px] -top-[400px] -left-[300px] ${
-          theme === "light" ? "opacity-[0.28]" : "opacity-[0.15]"
-        }`}
-      />
-      <BlurElement
-        className={`bg-[var(--accent-cyan)]/40 w-[600px] h-[600px] top-[30%] -right-[200px] ${
-          theme === "light" ? "opacity-[0.26]" : "opacity-[0.15]"
-        }`}
-      />
-      <BlurElement
-        className={`bg-[var(--accent-green)]/40 w-[700px] h-[700px] bottom-0 left-1/2 -translate-x-1/2 ${
-          theme === "light" ? "opacity-[0.24]" : "opacity-[0.15]"
-        }`}
-      />
 
       <Suspense fallback={<div>Loading...</div>}>
         <DynamicGeometricShapes />
@@ -581,12 +551,12 @@ export default function Home() {
               FOSSHack 2026
             </motion.h1>
             <motion.p
-              className="text-3xl sm:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]"
+              className="text-3xl sm:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent-green to-accent-light-green"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 1 }}
             >
-              That&apos;s a Wrap! 🎉
+              That&apos;s a Wrap!
             </motion.p>
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-6 text-xl text-foreground/60"
@@ -625,8 +595,8 @@ export default function Home() {
                 className="group relative inline-flex items-center gap-3 px-9 py-4 text-lg font-semibold rounded-full overflow-hidden text-[#141414] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-green),0.6)] focus-visible:ring-offset-2"
               >
                 <span className="absolute inset-0 rounded-full bg-white" />
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--accent-green)]/60 via-white to-[var(--accent-cyan)]/60 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="absolute inset-0 rounded-full blur-lg bg-[var(--accent-cyan)]/25 opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-accent-green/60 via-white to-accent-light-green/60 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="absolute inset-0 rounded-full blur-lg bg-accent-light-green/25 opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
                 <span className="absolute inset-0 rounded-full border border-[rgba(var(--accent-green),0.6)]" />
                 <span className="relative flex items-center gap-3">
                   <Camera className="w-5 h-5" />
@@ -636,7 +606,7 @@ export default function Home() {
               </Link>
               <Link
                 href="#winners"
-                className="group relative inline-flex items-center gap-3 px-9 py-4 text-lg font-semibold rounded-full overflow-hidden text-foreground border border-foreground/30 transition-all duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+                className="group relative inline-flex items-center gap-3 px-9 py-4 text-lg font-semibold rounded-full overflow-hidden text-foreground border border-foreground/30 transition-all duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-light-green),0.6)]"
               >
                 <span className="relative flex items-center gap-3">
                   <Trophy className="w-5 h-5" />
@@ -685,7 +655,7 @@ export default function Home() {
                 transition={{ delay: 0.1 * phaseIndex, duration: 1 }}
               >
                 <div className="mb-6 flex flex-col items-center gap-2 text-center">
-                  <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]">
+                  <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-accent-green to-accent-light-green">
                     {phase.phase}
                   </h3>
                   <div className="h-px w-32 bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
@@ -712,8 +682,8 @@ export default function Home() {
                         <span
                           className={`absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur ${
                             event.tag === "Online"
-                              ? "bg-[var(--accent-cyan)]/20 text-[var(--accent-cyan)] border border-[var(--accent-cyan)]/30"
-                              : "bg-[var(--accent-green)]/20 text-[var(--accent-green)] border border-[var(--accent-green)]/30"
+                              ? "bg-accent-light-green/20 text-accent-light-green border border-accent-light-green/30"
+                              : "bg-accent-green/20 text-accent-green border border-accent-green/30"
                           }`}
                         >
                           {event.tag}
@@ -731,13 +701,13 @@ export default function Home() {
                         </h4>
                         {event.speaker && (
                           <div className="flex items-center gap-2 text-base text-foreground/70 mb-3">
-                            <Users className="w-4 h-4 text-[var(--accent-cyan)]" />
+                            <Users className="w-4 h-4 text-accent-light-green" />
                             <span>{event.speaker}</span>
                           </div>
                         )}
                         {event.venue && (
                           <div className="flex items-center gap-2 text-base text-foreground/70 mb-3">
-                            <MapPin className="w-4 h-4 text-[var(--accent-green)]" />
+                            <MapPin className="w-4 h-4 text-accent-green" />
                             <span>{event.venue}</span>
                           </div>
                         )}
@@ -804,7 +774,7 @@ export default function Home() {
               >
                 <button
                   onClick={() => setShowAllGallery(true)}
-                  className="pointer-events-auto mb-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-white bg-black/40 backdrop-blur transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+                  className="pointer-events-auto mb-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-white bg-black/40 backdrop-blur transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-light-green),0.6)]"
                 >
                   Show More Photos
                   <ArrowRight className="h-4 w-4 transition-transform duration-300" />
@@ -818,7 +788,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="mx-auto mt-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-foreground transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-cyan),0.6)]"
+                className="mx-auto mt-10 flex items-center gap-2 rounded-full border border-foreground/30 px-8 py-3.5 text-base font-semibold text-foreground transition-colors duration-300 hover:border-foreground/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-light-green),0.6)]"
               >
                 Show Less
                 <ArrowRight className="h-4 w-4 rotate-90 transition-transform duration-300" />
@@ -896,7 +866,7 @@ export default function Home() {
                               />
                             </div>
                             <div className="p-6 sm:p-8 flex flex-col items-center w-full">
-                              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]">
+                              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-accent-green to-accent-light-green">
                                 {winner.rank}
                               </h3>
                               <div className="mt-2 text-2xl font-bold text-foreground">
@@ -905,7 +875,7 @@ export default function Home() {
                               <div className="text-xl text-foreground/70">
                                 {winner.project}
                               </div>
-                              <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-[var(--accent-green)]">
+                              <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-accent-green">
                                 {winner.prize}
                               </div>
                               <p className="mt-4 text-foreground/60 text-base">
@@ -930,7 +900,7 @@ export default function Home() {
                 type="button"
                 onClick={() => winnersApi?.scrollPrev()}
                 aria-label="Previous winner"
-                className="absolute left-1 sm:left-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-[var(--accent-cyan)]/60 hover:text-[var(--accent-cyan)]"
+                className="absolute left-1 sm:left-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-accent-light-green/60 hover:text-accent-light-green"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
@@ -938,7 +908,7 @@ export default function Home() {
                 type="button"
                 onClick={() => winnersApi?.scrollNext()}
                 aria-label="Next winner"
-                className="absolute right-1 sm:right-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-[var(--accent-cyan)]/60 hover:text-[var(--accent-cyan)]"
+                className="absolute right-1 sm:right-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-accent-light-green/60 hover:text-accent-light-green"
               >
                 <ArrowRight className="h-5 w-5" />
               </button>
@@ -953,7 +923,7 @@ export default function Home() {
                   aria-label={`Go to winner ${i + 1}`}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
                     i === activeWinner
-                      ? "w-8 bg-[var(--accent-cyan)]"
+                      ? "w-8 bg-accent-light-green"
                       : "w-2.5 bg-foreground/20 hover:bg-foreground/40"
                   }`}
                 />
@@ -996,7 +966,7 @@ export default function Home() {
                 transition={{ delay: 0.15 * index, duration: 0.8 }}
                 className="rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur p-8 flex flex-col"
               >
-                <Quote className="h-8 w-8 mb-4 text-[var(--accent-cyan)]" />
+                <Quote className="h-8 w-8 mb-4 text-accent-light-green" />
                 <p className="flex-1 text-lg leading-relaxed text-foreground/80">
                   &ldquo;{t.quote}&rdquo;
                 </p>
@@ -1043,7 +1013,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-[var(--accent-cyan)] mb-2">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-accent-light-green mb-2">
                     {post.platform}
                   </div>
                   <p className="text-base leading-relaxed text-foreground/70 flex-1">
@@ -1086,7 +1056,7 @@ export default function Home() {
                 transition={{ delay: 0.1 * index, duration: 0.8 }}
                 className="relative group/link"
               >
-                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--accent-cyan)]/18 via-[var(--accent-purple)]/14 to-[var(--accent-green)]/10 opacity-0 blur-xl group-hover/link:opacity-100 transition-opacity duration-500" />
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-accent-light-green/18 via-accent-purple/14 to-accent-green/10 opacity-0 blur-xl group-hover/link:opacity-100 transition-opacity duration-500" />
                 <Link
                   href={link.url}
                   target="_blank"
@@ -1095,7 +1065,7 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-foreground/8">
-                      <link.icon className="h-5 w-5 text-[var(--accent-cyan)]" />
+                      <link.icon className="h-5 w-5 text-accent-light-green" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-foreground">
