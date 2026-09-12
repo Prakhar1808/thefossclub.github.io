@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, type MotionProps } from "framer-moti
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import {
+  ArrowLeft,
   ArrowUp,
   ArrowRight,
   Calendar,
@@ -28,6 +29,12 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import Fosshack2026Navbar from "./navbar";
 
 const DynamicGeometricShapes = dynamic(
@@ -314,6 +321,22 @@ const winners = [
     image: "/fosshack2026/dockfleet.webp",
     desc: "Khushi · Sunidhi Singh · Aayush Jha · Pratyush",
   },
+  {
+    rank: "Partner Contribution",
+    prize: "₹25,000",
+    team: "Anshika Yadav",
+    project: "Improving UX & Contributor Workflow in FOSS United Platform",
+    image: "/fosshack2026/rule_smith.webp",
+    desc: "Team · Rule smith",
+  },
+  {
+    rank: "Partner Contribution",
+    prize: "₹10,000",
+    team: "Mayank Choubey",
+    project: "OSM Data Contribution",
+    image: "/fosshack2026/beluga.webp",
+    desc: "Team · Beluga · OpenStreetMap",
+  },
 ];
 
 const resultsThreadUrl = "https://forum.fossunited.org/t/foss-hack-2026-results/8094";
@@ -476,6 +499,8 @@ export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [showAllGallery, setShowAllGallery] = useState(false);
+  const [winnersApi, setWinnersApi] = useState<CarouselApi>(null);
+  const [activeWinner, setActiveWinner] = useState(0);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -485,6 +510,19 @@ export default function Home() {
       root.classList.remove("theme-light");
     }
   }, [theme]);
+
+  useEffect(() => {
+    if (!winnersApi) return;
+    const onSelect = () =>
+      setActiveWinner(winnersApi.selectedScrollSnap());
+    onSelect();
+    winnersApi.on("select", onSelect);
+    winnersApi.on("reInit", onSelect);
+    return () => {
+      winnersApi.off("select", onSelect);
+      winnersApi.off("reInit", onSelect);
+    };
+  }, [winnersApi]);
 
   useLenis((lenis) => {
     setShowScrollTop(lenis.scroll > 400);
@@ -822,47 +860,105 @@ export default function Home() {
         <div className="w-full max-w-6xl mx-auto relative z-10">
           <AnimatedTitle>Winners & Projects</AnimatedTitle>
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
           >
-            {winners.map((winner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 * index, duration: 0.8 }}
-                className="rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur overflow-hidden flex flex-col items-center text-center"
+            <div className="relative">
+              <Carousel
+                opts={{ align: "center", loop: true }}
+                setApi={setWinnersApi}
+                className="w-full"
               >
-                <div className="w-full overflow-hidden aspect-video">
-                  <Image
-                    src={winner.image}
-                    alt={`${winner.team} — photo coming soon`}
-                    width={640}
-                    height={400}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-8 flex flex-col items-center w-full">
-                <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]">
-                  {winner.rank}
-                </h3>
-                <div className="mt-2 text-2xl font-bold text-foreground">
-                  {winner.team}
-                </div>
-                <div className="text-xl text-foreground/70">
-                  {winner.project}
-                </div>
-                <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-[var(--accent-green)]">
-                  {winner.prize}
-                </div>
-                <p className="mt-4 text-foreground/60 text-base">
-                  {winner.desc}
-                </p>
-                </div>
-              </motion.div>
-            ))}
+                <CarouselContent className="-ml-4">
+                  {winners.map((winner, index) => {
+                    const active = index === activeWinner;
+                    return (
+                      <CarouselItem
+                        key={index}
+                        className="pl-4 basis-[85%] sm:basis-[55%] lg:basis-[38%]"
+                      >
+                        <div
+                          className={`relative h-full transition-all duration-500 ease-out ${
+                            active
+                              ? "opacity-100 scale-100"
+                              : "opacity-60 scale-[0.94]"
+                          }`}
+                        >
+                          <div className="relative h-full overflow-hidden rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur flex flex-col items-center text-center will-change-transform">
+                            <div className="w-full overflow-hidden aspect-video">
+                              <Image
+                                src={winner.image}
+                                alt={`${winner.team} — photo coming soon`}
+                                width={640}
+                                height={400}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="p-6 sm:p-8 flex flex-col items-center w-full">
+                              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-green)] to-[var(--accent-cyan)]">
+                                {winner.rank}
+                              </h3>
+                              <div className="mt-2 text-2xl font-bold text-foreground">
+                                {winner.team}
+                              </div>
+                              <div className="text-xl text-foreground/70">
+                                {winner.project}
+                              </div>
+                              <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-[var(--accent-green)]">
+                                {winner.prize}
+                              </div>
+                              <p className="mt-4 text-foreground/60 text-base">
+                                {winner.desc}
+                              </p>
+                            </div>
+                            {!active && (
+                              <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-background/85 via-transparent to-background/85" />
+                            )}
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+              </Carousel>
+
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-12 sm:w-28 bg-gradient-to-r from-background to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-12 sm:w-28 bg-gradient-to-l from-background to-transparent" />
+
+              <button
+                type="button"
+                onClick={() => winnersApi?.scrollPrev()}
+                aria-label="Previous winner"
+                className="absolute left-1 sm:left-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-[var(--accent-cyan)]/60 hover:text-[var(--accent-cyan)]"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => winnersApi?.scrollNext()}
+                aria-label="Next winner"
+                className="absolute right-1 sm:right-3 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-background/70 text-foreground backdrop-blur-md transition-colors duration-300 hover:border-[var(--accent-cyan)]/60 hover:text-[var(--accent-cyan)]"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-2">
+              {winners.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => winnersApi?.scrollTo(i)}
+                  aria-label={`Go to winner ${i + 1}`}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    i === activeWinner
+                      ? "w-8 bg-[var(--accent-cyan)]"
+                      : "w-2.5 bg-foreground/20 hover:bg-foreground/40"
+                  }`}
+                />
+              ))}
+            </div>
           </motion.div>
           <motion.div
             className="mt-12 text-center"
