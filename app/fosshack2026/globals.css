@@ -26,10 +26,14 @@ html.theme-light {
     --foreground: 20 20 30;
     --muted: 100 100 120;
     --card-rgb: 255 255 255;
+    --accent-green: 21 128 61;
+    --accent-light-green: 34 179 79;
 
     --color-background: rgb(250 250 255);
     --color-foreground: rgb(20 20 30);
     --color-muted: rgb(100 100 120);
+    --color-accent-green: rgb(21 128 61);
+    --color-accent-light-green: rgb(34 179 79);
 }
 
 html.theme-light body {

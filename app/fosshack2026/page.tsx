@@ -56,7 +56,7 @@ const Section = ({
 }) => {
   const [ref, inView] = useInView({
     triggerOnce: false,
-    threshold: 0.2,
+    threshold: 0,
   });
 
   return (
@@ -116,8 +116,8 @@ function TiltCard({
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotateX.set(-py * 14);
-    rotateY.set(px * 14);
+    rotateX.set(-py * 2);
+    rotateY.set(px * 2);
   }
 
   function handleMouseLeave() {
@@ -297,7 +297,6 @@ const eventPhases: EventPhase[] = [
 
 const winners = [
   {
-    rank: "1st Place",
     prize: "₹50,000",
     team: "Push & Pray",
     project: "Livabl",
@@ -305,7 +304,6 @@ const winners = [
     desc: "Tooshar · Karanveer Singh · Janamjai",
   },
   {
-    rank: "2nd Place",
     prize: "₹25,000",
     team: "CrypticByte",
     project: "Dockfleet",
@@ -313,15 +311,13 @@ const winners = [
     desc: "Khushi · Sunidhi Singh · Aayush Jha · Pratyush",
   },
   {
-    rank: "Partner Contribution",
     prize: "₹25,000",
-    team: "Team · Rule smith",
+    team: "Rule smith",
     project: "Improving UX & Contributor Workflow in FOSS United Platform",
     image: "/fosshack2026/rule_smith.webp",
     desc: "Anshika Yadav",
   },
   {
-    rank: "Partner Contribution",
     prize: "₹10,000",
     team: "Beluga",
     project: "OSM Data Contribution",
@@ -595,8 +591,6 @@ export default function Home() {
                 className="group relative inline-flex items-center gap-3 px-9 py-4 text-lg font-semibold rounded-full overflow-hidden text-[#141414] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent-green),0.6)] focus-visible:ring-offset-2"
               >
                 <span className="absolute inset-0 rounded-full bg-white" />
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-accent-green/60 via-white to-accent-light-green/60 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="absolute inset-0 rounded-full blur-lg bg-accent-light-green/25 opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
                 <span className="absolute inset-0 rounded-full border border-[rgba(var(--accent-green),0.6)]" />
                 <span className="relative flex items-center gap-3">
                   <Camera className="w-5 h-5" />
@@ -855,37 +849,36 @@ export default function Home() {
                               : "opacity-60 scale-[0.94]"
                           }`}
                         >
-                          <div className="relative h-full overflow-hidden rounded-2xl border border-foreground/10 bg-background/60 backdrop-blur flex flex-col items-center text-center will-change-transform">
-                            <div className="w-full overflow-hidden aspect-video">
-                              <Image
-                                src={winner.image}
-                                alt={`${winner.team} — photo coming soon`}
-                                width={640}
-                                height={400}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div className="p-6 sm:p-8 flex flex-col items-center w-full">
-                              <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-accent-green to-accent-light-green">
-                                {winner.rank}
-                              </h3>
-                              <div className="mt-2 text-2xl font-bold text-foreground">
-                                {winner.team}
+                          <TiltCard className="h-full overflow-hidden">
+                            <div className="flex h-full flex-col items-center text-center">
+                              <div className="w-full overflow-hidden aspect-video">
+                                <Image
+                                  src={winner.image}
+                                  alt={`${winner.team} — photo coming soon`}
+                                  width={640}
+                                  height={400}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                              <div className="text-xl text-foreground/70">
-                                {winner.project}
+                              <div className="p-6 sm:p-8 flex flex-col items-center w-full">
+                                <div className="text-2xl font-bold text-foreground">
+                                  {winner.team}
+                                </div>
+                                <div className="text-xl text-foreground/70">
+                                  {winner.project}
+                                </div>
+                                <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-accent-green">
+                                  {winner.prize}
+                                </div>
+                                <p className="mt-4 text-foreground/60 text-base">
+                                  {winner.desc}
+                                </p>
                               </div>
-                              <div className="mt-2 rounded-full bg-foreground/8 px-4 py-1 text-base font-semibold text-accent-green">
-                                {winner.prize}
-                              </div>
-                              <p className="mt-4 text-foreground/60 text-base">
-                                {winner.desc}
-                              </p>
                             </div>
                             {!active && (
                               <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-r from-background/85 via-transparent to-background/85" />
                             )}
-                          </div>
+                          </TiltCard>
                         </div>
                       </CarouselItem>
                     );
